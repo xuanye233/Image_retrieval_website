@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+{% block content_header %}{% endblock %}
+
+{% block logout %}{% endblock %}
+
+{% block content %}
+<h3>Login</h3>
+<form action="{{ url_for('login') }}" class="form" method="post">
+  <div class="form-group">
+    <label for="id_password">id</label>
+    <input class="form-control" id="id_id" name="id" type="id" value="" />
+    <label for="id_password">Password</label>
+    <input class="form-control" id="id_password" name="password" type="password" value="" />
+  </div>
+  <button class="btn btn-primary" type="submit">Login</button>
+</form>
+</Br></Br></Br></Br></Br>
+<form action="{{ url_for('recharge') }}" class="form" method="post">
+  <button class="btn btn-primary" type="submit" style="position: relative;left:100px;top:-158px">Get Lisence</button>
+</form>
+{% endblock %}

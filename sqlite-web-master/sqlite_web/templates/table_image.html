@@ -1,0 +1,66 @@
+{% extends "base_table.html" %}
+
+{% block image_tab_class %} active{% endblock %}
+{% block extra_scripts %}
+  <script type="text/javascript">
+    String.prototype.endWith=function(endStr){
+    var d=this.length-endStr.length;
+    return (d>=0&&this.lastIndexOf(endStr)==d);
+    }
+  </script>
+{% endblock %}
+
+{% block inner_content %}
+<script type="text/javascript">
+    String.prototype.endWith=function(endStr){
+    var d=this.length-endStr.length;
+    return (d>=0&&this.lastIndexOf(endStr)==d);
+    }
+  </script>
+<h3>Import Poster</h3>
+<form action="{{ url_for('table_image', table=table) }}" class="form" enctype="multipart/form-data" method="post">
+  <div class="form-group">
+    <label for="id_file">Input file</label>
+    <input class="form-control" name="file" type="file" />
+    <span class="help-block">
+      Supported file types: <strong>JPG</strong> and <strong>PNG</strong>.
+    </span>
+  </div>
+  <button class="btn btn-primary" type="submit">Import</button>
+  <a class="btn btn-secondary" href="{{ url_for('table_structure', table=table) }}">Cancel</a>
+</form>
+{% if row_count is not none and row_count >= 0 %}
+    <p>Rows modified: <code>{{ row_count }}</code></p>
+  {% endif %}
+
+  {% if data_description %}
+    {% if not data %}
+      <p>Empty result set.</p>
+    {% else %}
+      <a class="float-right" href="{{ url_for('table_query', table=table, sql=sql) }}">Permalink</a>
+      <h3>
+        Results ({{ data|length }})
+      </h3>
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            {% for col_desc in data_description %}
+              <th>{{ col_desc[0] }}</th>
+            {% endfor %}
+          </tr>
+        </thead>
+        <tbody>
+          {% for row in data %}
+            <tr>
+              {% for value in row %}
+                <td>
+                  {% if value is number %}{{ value }}{% else %}{% if value|first=='.'|last %}<a><img src={{value}} /></a>{% else %}{{ value }}{% endif %}{% endif %}
+                </td>
+              {% endfor %}
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    {% endif %}
+  {% endif %}
+{% endblock %}
